@@ -1,0 +1,52 @@
+version: "2"
+services:
+  web:
+      image: nginx
+      volumes:
+        - ./package:/mnt/app
+        - ./services/config/default.conf:/etc/nginx/conf.d/default.conf
+      ports:
+        - "8080:80"
+      environment:
+        - NGINX_HOST=foobar.com
+        - NGINX_PORT=80
+      links:
+        - "php"
+
+  db:
+      image: mysql
+      ports:
+        - "3336:3306"
+      environment:
+        - MYSQL_ROOT_PASSWORD=defaultpass
+
+  php:
+    build:
+      context: ./services/php
+      dockerfile: Dockerfile
+    volumes:
+      - ./package:/mnt/app
+
+  console:
+    build:
+      context: ./services/console
+      dockerfile: Dockerfile
+    links:
+      - php
+    volumes:
+      - ./package:/mnt/app
+    tty: true
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: "db"
+      PMA_USER: "root"
+      PMA_PASSWORD: "defaultpass"
+
+networks:
+  php_network:
+    external:
+      name: arithmeticphp_default

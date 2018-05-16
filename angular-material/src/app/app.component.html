@@ -1,0 +1,323 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<mat-toolbar>
+    <button mat-button [matMenuTriggerFor]="animals">Animal index</button>
+
+    <mat-menu #animals="matMenu">
+        <button mat-menu-item [matMenuTriggerFor]="vertebrates">Vertebrates</button>
+        <button mat-menu-item [matMenuTriggerFor]="invertebrates">Invertebrates</button>
+    </mat-menu>
+
+    <mat-menu #vertebrates="matMenu">
+        <button mat-menu-item [matMenuTriggerFor]="fish">Fishes</button>
+        <button mat-menu-item [matMenuTriggerFor]="amphibians">Amphibians</button>
+        <button mat-menu-item [matMenuTriggerFor]="reptiles">Reptiles</button>
+        <button mat-menu-item>Birds</button>
+        <button mat-menu-item>Mammals</button>
+    </mat-menu>
+
+    <mat-menu #invertebrates="matMenu">
+        <button mat-menu-item>Insects</button>
+        <button mat-menu-item>Molluscs</button>
+        <button mat-menu-item>Crustaceans</button>
+        <button mat-menu-item>Corals</button>
+        <button mat-menu-item>Arachnids</button>
+        <button mat-menu-item>Velvet worms</button>
+        <button mat-menu-item>Horseshoe crabs</button>
+    </mat-menu>
+
+    <mat-menu #fish="matMenu">
+        <button mat-menu-item>Baikal oilfish</button>
+        <button mat-menu-item>Bala shark</button>
+        <button mat-menu-item>Ballan wrasse</button>
+        <button mat-menu-item>Bamboo shark</button>
+        <button mat-menu-item>Banded killifish</button>
+    </mat-menu>
+
+    <mat-menu #amphibians="matMenu">
+        <button mat-menu-item>Sonoran desert toad</button>
+        <button mat-menu-item>Western toad</button>
+        <button mat-menu-item>Arroyo toad</button>
+        <button mat-menu-item>Yosemite toad</button>
+    </mat-menu>
+
+    <mat-menu #reptiles="matMenu">
+        <button mat-menu-item>Banded Day Gecko</button>
+        <button mat-menu-item>Banded Gila Monster</button>
+        <button mat-menu-item>Black Tree Monitor</button>
+        <button mat-menu-item>Blue Spiny Lizard</button>
+        <button mat-menu-item disabled>Velociraptor</button>
+    </mat-menu>
+</mat-toolbar>
+<mat-drawer-container class="example-container">
+    <mat-drawer mode="side" opened="true">
+        <mat-progress-bar mode="buffer"></mat-progress-bar>
+        Drawer content
+        <!--<mat-spinner></mat-spinner>-->
+    </mat-drawer>
+    <mat-drawer-content>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        Main content
+        <div style="text-align:center">
+            <h1>
+                Welcome to {{ title }}!
+                <mat-progress-bar mode="query"></mat-progress-bar>
+            </h1>
+        </div>
+        <mat-card>
+            <mat-list role="list">
+                <mat-list-item role="listitem">Item 1</mat-list-item>
+                <mat-list-item role="listitem">Item 2</mat-list-item>
+                <mat-list-item role="listitem">Item 3</mat-list-item>
+            </mat-list>
+        </mat-card>
+        <mat-card class="button-list">
+            <mat-list-item>
+                <button mat-button>Click me!</button>
+                <button mat-raised-button>CK1</button>
+                <button color="primary" mat-icon-button>CK2</button>
+                <button mat-fab>CK3</button>
+                <button color="primary" mat-mini-fab>CK4</button>
+                <mat-icon>home</mat-icon>
+
+            </mat-list-item>
+            <mat-list-item>
+                <p>
+                    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                        <mat-button-toggle value="bold">Bold</mat-button-toggle>
+                        <mat-button-toggle value="italic">Italic</mat-button-toggle>
+                        <mat-button-toggle value="underline">Underline</mat-button-toggle>
+                    </mat-button-toggle-group>
+                </p>
+                <p>
+                    <mat-chip-list>
+                        <mat-chip>One fish</mat-chip>
+                        <mat-chip>Two fish</mat-chip>
+                        <mat-chip color="primary" selected="true">Primary fish</mat-chip>
+                        <mat-chip color="accent" selected="true">Accent fish</mat-chip>
+                    </mat-chip-list>
+                </p>
+            </mat-list-item>
+        </mat-card>
+        <mat-card class="dialog">
+            <ol>
+                <li>
+                    <mat-form-field>
+                        <input matInput [(ngModel)]="name" placeholder="What's your name?">
+                        <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear"
+                                (click)="value=''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Email" [formControl]="emailFormControl"
+                               [errorStateMatcher]="matcher">
+                        <mat-hint>Errors appear instantly!</mat-hint>
+                        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                            Please enter a valid email address
+                        </mat-error>
+                        <mat-error *ngIf="emailFormControl.hasError('required')">
+                            Email is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </li>
+                <li>
+                    <button mat-raised-button (click)="openDialog()">Pick one</button>
+                </li>
+                <li *ngIf="animal">
+                    You chose: <i>{{animal}}</i>
+                </li>
+            </ol>
+        </mat-card>
+        <mat-card class="input">
+            <form class="example-form">
+                <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Company (disabled)" disabled value="Google">
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <span matPrefix>+1 &nbsp;</span>
+                    <input type="tel" matInput placeholder="Telephone">
+                    <mat-icon matSuffix>mode_edit</mat-icon>
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <input matInput #message maxlength="256" placeholder="Message">
+                    <mat-hint align="start"><strong>Don't disclose personal info</strong></mat-hint>
+                    <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+                </mat-form-field>
+                <table class="example-full-width" cellspacing="0">
+                    <tr>
+                        <td>
+                            <mat-form-field class="example-full-width">
+                                <input matInput placeholder="First name">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field class="example-full-width">
+                                <input matInput placeholder="Long Last Name That Will Be Truncated">
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                </table>
+
+                <p>
+                    <mat-form-field class="example-full-width">
+                        <textarea matInput placeholder="Address">1600 Amphitheatre Pkwy</textarea>
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width">
+                        <textarea matInput placeholder="Address 2"></textarea>
+                    </mat-form-field>
+                </p>
+
+                <table class="example-full-width" cellspacing="0">
+                    <tr>
+                        <td>
+                            <mat-form-field class="example-full-width">
+                                <input matInput placeholder="City">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field class="example-full-width">
+                                <input matInput placeholder="State">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field class="example-full-width">
+                                <input matInput #postalCode maxlength="5" placeholder="Postal Code" value="94043">
+                                <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                </table>
+                <mat-form-field class="example-full-width">
+                    <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl"
+                           [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of options" [value]="option">
+                            {{ option }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </form>
+        </mat-card>
+        <div class="checkbox">
+            <mat-card>
+                <mat-card-content>
+                    <h2 class="example-h2">Checkbox configuration</h2>
+
+                    <section class="example-section">
+                        <mat-checkbox class="example-margin" [(ngModel)]="checked">Checked</mat-checkbox>
+                        <mat-checkbox class="example-margin" [(ngModel)]="indeterminate">Indeterminate</mat-checkbox>
+                    </section>
+
+                    <section class="example-section">
+                        <label class="example-margin">Align:</label>
+                        <mat-radio-group [(ngModel)]="labelPosition">
+                            <mat-radio-button class="example-margin" value="after">After</mat-radio-button>
+                            <mat-radio-button class="example-margin" value="before">Before</mat-radio-button>
+                        </mat-radio-group>
+                    </section>
+
+                    <section class="example-section">
+                        <mat-checkbox class="example-margin" [(ngModel)]="disabled">Disabled</mat-checkbox>
+                    </section>
+                </mat-card-content>
+            </mat-card>
+
+            <mat-card class="result">
+                <mat-card-content>
+                    <h2 class="example-h2">Result</h2>
+
+                    <section class="example-section">
+                        <mat-checkbox
+                                class="example-margin"
+                                [(ngModel)]="checked"
+                                [(indeterminate)]="indeterminate"
+                                [labelPosition]="labelPosition"
+                                [disabled]="disabled">
+                            I'm a checkbox
+                        </mat-checkbox>
+                    </section>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="datepicker">
+            <mat-card>
+
+                <mat-form-field>
+                    <input matInput [matDatepicker]="picker1" placeholder="Angular forms" [formControl]="date">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput [matDatepicker]="picker2" placeholder="Angular forms (w/ deserialization)"
+                           [formControl]="serializedDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput [matDatepicker]="picker3" placeholder="Value binding" [value]="date.value">
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                </mat-form-field>
+                <p>
+                    <mat-form-field>
+                        <input matInput [matDatepicker]="dp1" placeholder="Completely disabled" disabled>
+                        <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+                        <mat-datepicker #dp1></mat-datepicker>
+                    </mat-form-field>
+                </p>
+
+                <p>
+                    <mat-form-field>
+                        <input matInput [matDatepicker]="dp2" placeholder="Popup disabled">
+                        <mat-datepicker-toggle matSuffix [for]="dp2" disabled></mat-datepicker-toggle>
+                        <mat-datepicker #dp2></mat-datepicker>
+                    </mat-form-field>
+                </p>
+
+                <p>
+                    <mat-form-field>
+                        <input matInput [matDatepicker]="dp3" placeholder="Input disabled" disabled>
+                        <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                        <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field>
+                        <mat-select placeholder="Toppings" [formControl]="toppings" multiple>
+                            <mat-select-trigger>
+                                {{toppings.value ? toppings.value[0] : ''}}
+                                <span *ngIf="toppings.value?.length > 1" class="example-additional-selection">
+        (+{{toppings.value.length - 1}} others)
+      </span>
+                            </mat-select-trigger>
+                            <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </p>
+            </mat-card>
+            <mat-card>
+                <mat-selection-list #shoes>
+                    <mat-list-option *ngFor="let shoe of typesOfShoes">
+                        {{shoe}}
+                    </mat-list-option>
+                </mat-selection-list>
+
+                <p>
+                    Options selected: {{shoes.selectedOptions.selected.length}}
+                </p>
+                <mat-paginator [length]="100"
+                               [pageSize]="10"
+                               [pageSizeOptions]="[5, 10, 25, 100]">
+                </mat-paginator>
+            </mat-card>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>
+<mat-divider></mat-divider>
+<mat-spinner></mat-spinner>
+
+<div class="mat-app-background basic-container">
+    <app-dialog-data-example>loading</app-dialog-data-example>
+</div>
